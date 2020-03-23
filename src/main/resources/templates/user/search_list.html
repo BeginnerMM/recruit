@@ -26,11 +26,11 @@
             <a class="logo"></a>
             <ul class="nav col-lg-8">
                 <!--<li class="address">全国</li>-->
-                <li class="nav_li"><a class="nav_item" href="/">首页</a></li>
-                <li class="nav_li current"><a class="nav_item" href="/searchlist?keyword=">职位搜索</a></li>
-                <li class="nav_li"><a class="nav_item" href="https://www.xiaoyuanzhao.com/">2018校招</a></li>
-                <li class="nav_li"><a class="nav_item" href="https://www.kongzhongtalk.com/">空中宣讲</a></li>
-                <li class="nav_li"><a class="nav_item" href="/user/info?type=person">我的简历</a></li>
+                <li class="nav_li "><a class="nav_item" href="/">首页</a></li>
+                <li class="nav_li  current"><a class="nav_item" href="/searchlist?keyword=">职位</a></li>
+                <li class="nav_li"><a class="nav_item" href="/company/companyIndex">公司</a></li>
+                <li class="nav_li"><a class="nav_item" href="/news/newsIndex">资讯</a></li>
+                <li class="nav_li"><a class="nav_item" href="/user/info?type=person">关于我</a></li>
             </ul>
 
             <ul class="clear_fix col-lg-2" v-if="type===null">
@@ -52,26 +52,6 @@
                             <li><a href="/user/info">个人中心</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="/user/logout">注销</a></li>
-                        </ul>
-                    </div>
-
-                </li>
-            </ul>
-            <ul class="clear_fix col-lg-2 " v-if="type==='hr'">
-                <li><img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58" alt=""
-                         class="img-circle" style="width: 48px;height: 48px"></li>
-                <li>
-
-                    <div class="dropdown">
-                        <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <h6>{{person.hr.hrName}}</h6>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dLabel">
-                            <li><a href="user/usercenter">个人中心</a></li>
-                            <li><a href="user/usercenter">管理中心</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="user/logout">注销</a></li>
                         </ul>
                     </div>
 
@@ -132,9 +112,7 @@
             </div>
         </div>
         <div class="job-summary-container container" id="posItem">
-
             <div class="content " class="job-content" v-if="orderBy==='salaryUp'">
-
                 <div class="col-lg-4 summary-border" class="job-box" v-for="job in jobs">
                     <div class="job-summary">
                         <div class="line-1 row">
@@ -169,7 +147,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="content " class="job-content" v-if="orderBy==='releaseDate'">
 

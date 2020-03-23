@@ -1,12 +1,10 @@
 package qdu.java.recruit.controller.user;
 
 import com.github.pagehelper.PageInfo;
-import io.swagger.annotations.Api;
-import javafx.application.Application;
 import net.sf.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import qdu.java.recruit.constant.GlobalConst;
@@ -18,49 +16,71 @@ import qdu.java.recruit.pojo.PositionCompanyBO;
 import qdu.java.recruit.pojo.UserCommentBO;
 import qdu.java.recruit.service.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 @Controller
-@EnableAutoConfiguration
-@Api("ajax返回json控制器")
 public class DataController extends BaseController {
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
-    @Resource
+    @Autowired
     private PositionService positionService;
 
-    @Resource
+    @Autowired
     private UserService userService;
 
-    @Resource
+    @Autowired
     private CategoryService categoryService;
 
-    @Resource
+    @Autowired
     private CommentService commentService;
 
-    @Resource
+    @Autowired
     private DepartmentService departmentService;
 
-    @Resource
+    @Autowired
     private CompanyService companyService;
 
-    @Resource
+    @Autowired
     private ResumeService resumeService;
 
-    @Resource
+    @Autowired
     private ApplicationService applicationService;
 
-    @Resource
+    @Autowired
     private FavorService favorService;
 
+
+
+    /**
+     * 用户登录
+     *
+     * @return
+     */
+    @PostMapping(value = "user/loginPost")
+    @ResponseBody
+    public int userLogin(HttpSession httpSession, @RequestParam("userName") String userName, @RequestParam("userPass") String userPass) {
+
+        String mobile = userName;
+        String password = userPass;
+
+        if (mobile == null || password == null) {
+            logger.info("登录失败");
+            return 0;
+        }
+
+        if (userService.loginUser(mobile, password)) {
+
+            httpSession.setAttribute("user", userService.getUserByMobile(mobile));
+            logger.info("登录成功");
+            return 1;
+        }
+        return 0;
+    }
 
     /**
      * 用户注册返回 0 -> 失败 1 -> 成功
@@ -73,10 +93,12 @@ public class DataController extends BaseController {
 
         //验证mobile 和 password是否为空
         if (mobile == null || password == null || nickName == null) {
+            logger.info("注册失败！填写信息不全");
             return 0;
         }
 
         if (userService.getUserByMobile(mobile) != null) {
+            logger.info("注册失败，当前用户已存在");
             return 0;
         }
 
@@ -94,32 +116,11 @@ public class DataController extends BaseController {
         if (!resumeService.createResume(resume)) {
             return 0;
         }
+        logger.info("注册成功");
         return 1;
     }
 
-    /**
-     * 用户登录
-     *
-     * @return
-     */
-    @PostMapping(value = "user/loginPost")
-    @ResponseBody
-    public int userLogin(HttpSession httpSession, @RequestParam String userName, @RequestParam String userPass) {
 
-        String mobile = userName;
-        String password = userPass;
-
-        if (mobile == null || password == null) {
-            return 0;
-        }
-
-        if (userService.loginUser(mobile, password)) {
-
-            httpSession.setAttribute("user", userService.getUserByMobile(mobile));
-            return 1;
-        }
-        return 0;
-    }
 
     /**
      * 主页分页输出 （用户信息，职位列表）
@@ -131,13 +132,8 @@ public class DataController extends BaseController {
     @PostMapping(value = "/page/{page}")
     @ResponseBody
     public String index(HttpSession httpSession, @PathVariable int page, @RequestParam(value = "limit", defaultValue = "6") int limit) {
-        //测试用户
+        //登录用户
         UserEntity user = (UserEntity) httpSession.getAttribute("user");
-        HREntity hr = (HREntity) httpSession.getAttribute("hr");
-
-//        UserEntity user = new UserEntity();
-//        user = userService.getUser(5);
-
         //推荐职位列表
         page = (page < 1 || page > GlobalConst.MAX_PAGE) ? 1 : page;
 
@@ -151,9 +147,6 @@ public class DataController extends BaseController {
 
         if (user != null) {
             output.put("user", user);
-        }
-        if (hr != null) {
-            output.put("hr", hr);
         }
 
         JSONObject jsonObject = JSONObject.fromObject(output);
@@ -242,8 +235,6 @@ public class DataController extends BaseController {
 
         //当前用户信息
         UserEntity user = (UserEntity) httpSession.getAttribute("user");
-        HREntity hr = (HREntity) httpSession.getAttribute("hr");
-
         //所属部门信息
         DepartmentEntity department = departmentService.getDepartment(position.getDepartmentId());
         //所属公司信息
@@ -266,12 +257,7 @@ public class DataController extends BaseController {
         if (user != null) {
             output.put("user", user);
         }
-        if (hr != null) {
-            output.put("hr", hr);
-        }
-
         JSONObject jsonObject = JSONObject.fromObject(output);
-
         return jsonObject.toString();
     }
 
@@ -288,6 +274,10 @@ public class DataController extends BaseController {
 
         //当前用户
         UserEntity user = this.getUser(request);
+        if (user==null){
+            logger.info("用户未登录");
+            return "redirect:/user/login";
+        }
 
         //当前用户简历
         ResumeEntity resume = resumeService.getResumeById(user.getUserId());

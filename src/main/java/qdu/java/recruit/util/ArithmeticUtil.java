@@ -284,11 +284,9 @@ public class ArithmeticUtil {
         //遍历所有职位，填充好感度键值对图
         for (int i = 0; i < listPosAll.size(); i++) {
             posItemId = listPosAll.get(i).getPositionId();
-
             for (int j = 0; j < listUserAll.size(); j++) {
                 userItemId = listUserAll.get(j).getUserId();
                 resumeItemId = ariConst.resumeMapper.getResumeId(userItemId);
-
                 if (ariConst.applicationMapper.getApplication(resumeItemId, posItemId) != null) {
                     itemArray[j] = 3;
                 } else {
@@ -298,7 +296,6 @@ public class ArithmeticUtil {
                 if (ariConst.favorMapper.getFavor(userItemId, posItemId) != null) {
                     itemArray[j] += 3;
                 }
-
                 CommentEntity com = ariConst.commentMapper.listComment(userItemId, posItemId);
                 if (com != null) {
                     switch (com.getType()) {

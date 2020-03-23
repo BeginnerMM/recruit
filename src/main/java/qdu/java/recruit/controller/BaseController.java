@@ -1,7 +1,6 @@
 package qdu.java.recruit.controller;
 
 import qdu.java.recruit.constant.GlobalConst;
-import qdu.java.recruit.entity.CompanyEntity;
 import qdu.java.recruit.entity.HREntity;
 import qdu.java.recruit.entity.UserEntity;
 import qdu.java.recruit.util.InfoUtil;
@@ -16,6 +15,14 @@ public class BaseController {
     //指向用户表现层
     public String userDirect(String viewName) {
         return GlobalConst.USER_RPATH + "/" + viewName;
+    }
+
+    public String companyFirect(String viewName){
+        return GlobalConst.COMPANY + "/" + viewName;
+    }
+
+    public String newsFirect(String viewName){
+        return GlobalConst.NEWS + "/" + viewName;
     }
 
     //指向hr路径层
@@ -47,8 +54,6 @@ public class BaseController {
     public Integer getHRId(HttpServletRequest request) {
         return getHR(request).getHrId();
     }
-
-
 
     //设置页面title
     public BaseController title(HttpServletRequest request,String title){

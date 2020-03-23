@@ -8,28 +8,19 @@ var box = new Vue({
     mounted: function () {
         this.$nextTick(function () {
             $.ajax({
-                url: "http://localhost:8080/page/" + page,
+                url: "/page/" + page,
                 type: "post",
                 dataType: "json",
-//                    jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
-//                    jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自
                 success: function (msg) {
-
                     box.jobs = msg.posInfo;
-                    // pageTotal = msg.posInfo.pages;
 
                     if (msg.user != null) {
                         headervue.type = 'user';
                         headervue.person.user = msg.user;
-                    } else if (msg.hr != null) {
-                        headervue.type = 'hr';
-                        headervue.person.hr = msg.hr;
                     }
-
-
                 },
                 error: function (msg) {
-                    window.location.href = "localhost:8080/user/login";
+                    window.location.href = "/user/login";
                 }
             });
 
@@ -41,7 +32,7 @@ function nextPage() {
     page = page + 1;
     if (page <= pageTotal) {
         $.ajax({
-            url: "http://localhost:8080/page/" + page,
+            url: "/page/" + page,
             type: "post",
             dataType: "json",
             success: function (msg) {
@@ -60,3 +51,4 @@ function nextPage() {
         $("#viewMoreButton").addClass("disable");
     }
 }
+

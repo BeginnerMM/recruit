@@ -27,10 +27,10 @@
             <ul class="nav col-lg-8">
                 <!--<li class="address">全国</li>-->
                 <li class="nav_li current"><a class="nav_item" href="/">首页</a></li>
-                <li class="nav_li"><a class="nav_item" href="/searchlist?keyword=">职位搜索</a></li>
-                <li class="nav_li"><a class="nav_item" href="https://www.xiaoyuanzhao.com/">2018校招</a></li>
-                <li class="nav_li"><a class="nav_item" href="https://www.kongzhongtalk.com/">空中宣讲</a></li>
-                <li class="nav_li"><a class="nav_item" href="/user/info?type=person">我的简历</a></li>
+                <li class="nav_li"><a class="nav_item" href="/searchlist?keyword=">职位</a></li>
+                <li class="nav_li"><a class="nav_item" href="/company/companyIndex">公司</a></li>
+                <li class="nav_li"><a class="nav_item" href="/news/newsIndex">资讯</a></li>
+                <li class="nav_li"><a class="nav_item" href="/user/info?type=person">关于我</a></li>
             </ul>
 
             <ul class="clear_fix col-lg-2  "  v-if="type===null">
@@ -59,29 +59,6 @@
 
                 </li>
             </ul>
-            <ul class="clear_fix col-lg-2 "  v-if="type==='hr'">
-                <li><img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58" alt="" class="img-circle" style="width: 48px;height: 48px"></li>
-                <li>
-
-
-                    <div class="dropdown">
-                        <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <h6 >{{person.hr.hrName}}</h6>
-                            <span class="caret"></span>
-                        </a>
-
-
-                        <ul class="dropdown-menu" aria-labelledby="dLabel">
-                            <li><a href="user/usercenter">个人中心</a></li>
-                            <li><a href="user/usercenter">管理中心</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="user/logout">注销</a></li>
-                        </ul>
-                    </div>
-
-                </li>
-            </ul>
-
         </div>
     </div>
     <script>
@@ -604,44 +581,11 @@
             </div>
         </div>
         <div class="job-summary-container container">
-            <!--<div class="content " id="job-content">-->
-
-            <!--<div class="col-lg-4 summary-border" id="job-box" v-for="job in jobs">-->
-            <!--<div class="job-summary">-->
-            <!--<div class="line-1 row">-->
-            <!--<div class="job-name col-md-9"><a href="">{{job.title}}</a><span class="create-item">两日前发布<span class="lianxi iconfont icon-lianxi"></span> </span></div>-->
-            <!--<div class="job-salary col-md-3  text-right">8K-15K</div>-->
-            <!--</div>-->
-            <!--<div class="line-2 job-require">大学本科学历</div>-->
-            <!--<div class="line-3 job-tag-content row">-->
-            <!--<ul class="" >-->
-            <!--<li class="col-md-3 job-tag" >Hadoop</li>-->
-            <!--<li class="col-md-3 job-tag" >架构师</li>-->
-            <!--&lt;!&ndash;!!!!!!!TAG&ndash;&gt;-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--<div class="company">-->
-            <!--<img style="width: 40px;height: 40px" class="img-rounded" src="http://static.lagou.com/thumbnail_100x100/i/image/M00/68/A7/CgqKkVgRYweAD4MtAAAzR3Jd4fM663.png"/>-->
-            <!--<div class="company-right">-->
-            <!--<div class="row company-name">-->
-            <!--<a :href="">中国移动</a>-->
-            <!--</div>-->
-            <!--<div class="row company-description">-->
-            <!--大型互联网上市公司-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-
-
-
-            <!--</div>-->
             <div class="content " id="job-content">
                 <div class="col-lg-4 summary-border" id="job-box" v-for="job in jobs">
                     <div class="job-summary">
                         <div class="line-1 row">
-                            <div class="job-name col-md-8"><a :href="'http://localhost:8080/position/'+job.positionId">{{job.title}}</a><span class="create-item">数日前发布<span class="lianxi iconfont icon-lianxi"></span> </span></div>
+                            <div class="job-name col-md-8"><a :href="'/position/'+job.positionId">{{job.title}}</a><span class="create-item">数日前发布<span class="lianxi iconfont icon-lianxi"></span> </span></div>
                             <div class="job-salary col-md-4  text-right">{{Math.floor(job.salaryDown/1000)}}K-{{Math.floor(job.salaryUp/1000)}}K</div>
                         </div>
                         <div class="line-2 job-require"><!--{{job.requirement}}--></div>

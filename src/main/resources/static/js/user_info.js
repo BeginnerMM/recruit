@@ -2,7 +2,7 @@ var url_type = GetQueryString("type");
 
 $(document).ready(function () {
     $.ajax({
-        url: "http://localhost:8080/user/info",
+        url: "/user/info",
         type: "post",
         dataType: "json",
         success: function (data) {
@@ -14,9 +14,6 @@ $(document).ready(function () {
             if (data.user != null) {
                 header.type = 'user';
                 header.person.user = data.user;
-            } else if (data.hr != null) {
-                header.type = 'hr';
-                header.person.hr = data.hr;
             }
 
             /**
@@ -135,7 +132,7 @@ function infoUpdate() {
 
     $.ajax({
         type: "post",
-        url: "http://localhost:8080/user/info/update",
+        url: "/user/info/update",
         data: $("#user_info").serialize(),
         dataType: "text",
         contentType: "application/x-www-form-urlencoded; charset=utf-8",
@@ -153,14 +150,14 @@ function infoUpdate() {
 
 function posJump(){
     var id = $("#posId").val();
-    window.location.href = "http://localhost:8080/position/"+id;
+    window.location.href = "/position/"+id;
 }
 
 function posRemove(){
     var id = $("#posId").val();
     $.ajax({
         type:"get",
-        url: "http://localhost:8080/user/disfavor/"+id,
+        url: "/user/disfavor/"+id,
         dataType:"text",
         success: function(msg){
             console.log(msg);
@@ -273,7 +270,7 @@ var content = new Vue({
 
         /*实现职位页面跳转*/
         // review: function(posId){
-        //     return "$.jump(\'http://localhost:8080/position/"+posId+"\')";
+        //     return "$.jump(\'/position/"+posId+"\')";
         // },
 
         /*二级联动选择地区*/

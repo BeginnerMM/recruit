@@ -1,13 +1,17 @@
 package qdu.java.recruit.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import qdu.java.recruit.entity.*;
+import qdu.java.recruit.entity.ApplicationEntity;
+import qdu.java.recruit.entity.CommentEntity;
+import qdu.java.recruit.entity.FavorEntity;
+import qdu.java.recruit.entity.UserEntity;
 import qdu.java.recruit.mapper.*;
 import qdu.java.recruit.pojo.PositionCompanyBO;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 @Component
 public class RecPositionUtil {
@@ -19,22 +23,22 @@ public class RecPositionUtil {
         posConst = this;
     }
 
-    @Resource
+    @Autowired
     private ApplicationMapper applicationMapper;
 
-    @Resource
+    @Autowired
     private FavorMapper favorMapper;
 
-    @Resource
+    @Autowired
     private CommentMapper commentMapper;
 
-    @Resource
+    @Autowired
     private PositionMapper positionMapper;
 
-    @Resource
+    @Autowired
     private ResumeMapper resumeMapper;
 
-    @Resource
+    @Autowired
     private UserMapper userMapper;
 
     // map          ->  存在ServletContext中所有职位当日PV数
@@ -83,7 +87,6 @@ public class RecPositionUtil {
 
         //根据活跃度标准判断调用的推荐算法
         if (activation < actStandard) {
-
             posList = recArithmetic.popularityRec(map, user);
         } else {
 

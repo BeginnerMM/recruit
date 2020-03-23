@@ -3,11 +3,11 @@ package qdu.java.recruit.constant;
 public class GlobalConst {
 
     //用户、hr、管理员表现层路径
-    public static String USER_RPATH = "/user";
+    public static String USER_RPATH = "user";
 
-    public static String HR_PATH = "/hr";
+    public static String HR_PATH = "hr";
 
-    public static String ADMIN_PATH = "/admin";
+    public static String ADMIN_PATH = "admin";
 
     //登录用户Session Key
     public static String LOGIN_SESSION_KEY = "user";
@@ -22,5 +22,10 @@ public class GlobalConst {
      * 登录session key
      */
     public final static String SESSION_KEY = "user";
+
+    //公司路径
+    public final static  String COMPANY = "company";
+    //资讯路径
+    public final static  String NEWS = "news";
 
 }

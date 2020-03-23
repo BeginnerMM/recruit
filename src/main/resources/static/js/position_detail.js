@@ -52,7 +52,7 @@ var box = new Vue({
 var favorFlag;
 $(document).ready(function () {
     $.ajax({
-        url: "http://localhost:8080/user/favorOrNot/" + posId,
+        url: "/user/favorOrNot/" + posId,
         type: "get",
         dataType: "json",
         success: function (msg) {
@@ -73,12 +73,12 @@ $(document).ready(function () {
 
 var index = href.lastIndexOf("\/");
 var posId = href.substr(index + 1, href.length);
-// document.getElementById("apply_tag").setAttribute("href","http://localhost:8080/user/apply/"+posId);
-$("#apply_tag").attr("href", "http://localhost:8080/user/apply/" + posId);
+// document.getElementById("apply_tag").setAttribute("href","/user/apply/"+posId);
+$("#apply_tag").attr("href", "/user/apply/" + posId);
 $("#favor_tag").click(function () {
     if (favorFlag == 0) {
         $.ajax({
-            url: "http://localhost:8080/user/favor/" + posId,
+            url: "/user/favor/" + posId,
             type: "get",
             dataType: "text",
             success: function (msg) {
@@ -96,7 +96,7 @@ $("#favor_tag").click(function () {
         window.location.reload();
     } else {
         $.ajax({
-            url: "http://localhost:8080/user/disfavor/" + posId,
+            url: "/user/disfavor/" + posId,
             type: "get",
             dataType: "text",
             success: function (msg) {
@@ -137,7 +137,7 @@ $("#posId").val(posId);
 //
 //     $.ajax({
 //         type: "post",
-//         url: "http://localhost:8080/user/comment",
+//         url: "/user/comment",
 //         data: input,
 //         dataType: "text",
 //         success: function (msg) {
